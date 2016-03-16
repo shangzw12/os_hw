@@ -34,8 +34,10 @@ def addr_convert(v_addr, mem, disk):
 		print("Fault!")
 		return 
 	pte_base_addr = pfn[1:8]
-	pte_addr = format(pte_id + int(pte_base_addr, 2),'012b')
-	ptn = mem[int(pte_addr[0:7],2)][int(pte_addr[7:12],2)]
+	#print("pte_addr: "+ str(pte_addr))
+	print(str(pte_base_addr))
+	
+	ptn = mem[int(pte_base_addr,2)][pte_id]
 	ptn = format(int(ptn, 16), '08b')
 	valid_ptn = ptn[0:1]
 	print ("pte_index: "+ str(hex(pte_id)))
@@ -43,6 +45,7 @@ def addr_convert(v_addr, mem, disk):
 	if(not valid_ptn):
 		print("Fault! Search in disk!")
 		value = disk[int(ptn[1:8], 2)][offset]
+		print ("--> value: "+ str(value))
 		return
 	value = mem[int(str(ptn[1:8]), 2)][offset]
 	print ("--> value: "+ str(value))
