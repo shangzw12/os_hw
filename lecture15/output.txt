@@ -1,0 +1,11 @@
+Execution trace: 
+[ time 0 ]Run job 0 for 15 sec ( Done at 15 )
+[ time 15 ]Run job 1 for 24 sec ( Done at 39 )
+[ time 39 ]Run job 3 for 20 sec ( Done at 59 )
+[ time 59 ]Run job 2 for 35 sec ( Done at 94 )
+Final statistics: 
+Job  0 -- Response: 0 Turnaround 15 Wait 0
+Job  1 -- Response: 14 Turnaround 38 Wait 14
+Job  2 -- Response: 59 Turnaround 94 Wait 59
+Job  3 -- Response: 24 Turnaround 44 Wait 24
+Average -- Response: 24.25 Turnaround: 47.75 Wait 24.25
