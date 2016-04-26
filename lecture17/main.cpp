@@ -19,7 +19,6 @@ pthread_t threads[P_NUM];
 
 void* run(void* id){
 	int pid = *(int*)id,index;
-	cout<<"Proc "<<pid<<" start"<<endl;
 	for(int i=0;i<LOOP_NUM; i++){
 		while(true){
 			//announce that we need the resource
@@ -31,10 +30,10 @@ void* run(void* id){
 			*/
 			while(index!=pid){
 				if(flags[index]!=IDLE) index = turn;
-				else index++;
+				else index = (index+1)%P_NUM;
 			}
 			// claim the resource tentatively
-			flags[i] = ACTIVE;
+			flags[pid] = ACTIVE;
 			//find all the first process active besides ourselves
 			index = 0;
 			while((index< P_NUM) &&(index == pid)||(flags[index]!= ACTIVE)){
@@ -42,18 +41,21 @@ void* run(void* id){
 			}
 			if((index>=P_NUM)&&((turn==pid) || flags[turn] == IDLE)) break;
 		}
+		cout<<"--------------------------------"<<endl;
 		cout<<"ENTER "<<pid<<endl;
 		// claim the turn and proceed
 		turn= pid;
-		cout<<"ENTER THE CRITICAL SECTION PID "<<pid<<endl;
+		cout<<"CRITICAL "<<pid<<endl;
 		//exit 
 		index = (pid+1) % P_NUM;
 		while(flags[index] == IDLE){
 			index = (index+1) % P_NUM;
 		}
+		cout<<"EXIT "<<pid<<endl;
+		cout<<"--------------------------------"<<endl;
 		turn = index;
 		flags[pid] = IDLE;
-		cout<<"EXIT "<<pid<<endl;
+		
 	}
 	return NULL;
 }
@@ -64,9 +66,10 @@ int main(){
 		th_id[i] = i;
 	}
 	cout<<"Test Begin:"<<endl;
-	for(int i=0;i<P_NUM;i++){
-		pthread_create(&threads[i], NULL, run, (void*)&th_id[i]);
-	}
+	pthread_create(&threads[0], NULL, run, (void*)&th_id[0]);
+	pthread_create(&threads[3], NULL, run, (void*)&th_id[3]);
+	pthread_create(&threads[2], NULL, run, (void*)&th_id[2]);
+	pthread_create(&threads[1], NULL, run, (void*)&th_id[1]);
 	for(int i=0;i<P_NUM;i++){
 		pthread_join(threads[i],NULL);
 	}
