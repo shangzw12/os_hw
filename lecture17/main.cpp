@@ -67,7 +67,7 @@ int main(){
 		pthread_create(&threads[i], NULL, run, (void*)&th_id[i]);
 	}
 	for(int i=0;i<P_NUM;i++){
-		pthread_join(thread[i],NULL);
+		pthread_join(threads[i],NULL);
 	}
 	return 0;
 }
