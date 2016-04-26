@@ -55,6 +55,7 @@ void* run(void* id){
 		flags[pid] = IDLE;
 		cout<<"EXIT "<<pid<<endl;
 	}
+	return NULL;
 }
 int main(){
 	int th_id[P_NUM];

@@ -1,3 +1,3 @@
 all:
-	g++ -o main main.cpp -lpthreadGC2
+	g++ -o main main.cpp -lpthreadGCE2
 
