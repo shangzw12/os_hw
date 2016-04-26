@@ -64,7 +64,7 @@ int main(){
 	}
 	cout<<"Test Begin:"<<endl;
 	for(int i=0;i<P_NUM;i++){
-		pthread_create(&threads[i], NULL, process, (void*)&th_id[i]);
+		pthread_create(&threads[i], NULL, run, (void*)&th_id[i]);
 	}
 	for(int i=0;i<P_NUM;i++){
 		pthread_join(thread[i],NULL);
