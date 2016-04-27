@@ -5,13 +5,13 @@
 #define MAX_LOOP 1000
 
 using namespace std;
-int Acount, Bcount;
-int M, N;
-sem_t A_left, B_left;
-sem_t Metux;
+int Acount, Bcount;		//仓库中A B货物的数量
+int M, N;				//限制条件中的M,N
+sem_t A_left, B_left;	//A B剩余的可以装入的数目
+sem_t Metux;			//互斥锁
 
 bool check(){
-	return (Acount - Bcount >=-M && Acount -Bcount <=N);
+	return (Acount - Bcount >=-M && Acount -Bcount <=N);		//可装填的条件
 }
 void print(){
 	//cout<<"Acount: "<<Acount<<' '<<"Bcount: "<<Bcount<<" Minus"<<Acount-Bcount<<' '<<check()<<endl;
@@ -21,7 +21,7 @@ void* procA(void* ){
 	for(int i=0;i<MAX_LOOP; i++){
 		sem_wait(&A_left);
 		sem_wait(&Metux);
-		if(!check()){
+		if(!check()){	//如果当前不可装填，将之前所做工作的影响都恢复
 			sem_post(&Metux);
 			sem_post(&A_left);
 			continue;
@@ -29,7 +29,7 @@ void* procA(void* ){
 		Acount++;
 		print();
 		sem_post(&Metux);
-		sem_post(&B_left);
+		sem_post(&B_left);	//当执行完一次A货物的装填工作时， 需要将剩余B的数量+1
 	}
 	return NULL;
 }
