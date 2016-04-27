@@ -15,7 +15,8 @@ bool check(){
 }
 void print(){
 	//cout<<"Acount: "<<Acount<<' '<<"Bcount: "<<Bcount<<" Minus"<<Acount-Bcount<<' '<<check()<<endl;
-	if(Acount - Bcount >5) cout<<"YES"<<endl;
+	if(!check()) cout<<"Error!"<<endl;
+	//cout等输出太慢，以致于体现不出多线程的调度效果，但是在限定条件之后的输出结果可以看出，输出结果符合预期。
 }
 void* procA(void* ){
 	for(int i=0;i<MAX_LOOP; i++){
