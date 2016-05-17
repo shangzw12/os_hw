@@ -12,7 +12,7 @@ sys_read=>sysfile_read=>file_read
 	*                      in the uio, updating uio_resid to reflect the
 	*                      amount read, and updating uio_offset to match.
 	*                      Not allowed on directories or symlinks.
-#define vop_read(node, iob)        (__vop_op(node, read)(node, iob))
+define vop_read(node, iob)        (__vop_op(node, read)(node, iob))
 展开后调用到inode->vop_read, 这个在inode初始化的时候导向sfs_read
 之后sfs调用到dop_io, 调用的是device对象的io函数, 这个是设备的io操作, 最后就完成了文件的读的过程
 
